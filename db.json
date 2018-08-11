@@ -7,5 +7,9 @@
     ],
     "profile": {
       "name": "typicode"
+    },
+    "token": {
+        "status": "success",
+        "ldap": "justin.koo"
     }
   }
