@@ -3,12 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ajv": "^6.5.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "react-scripts-ts": "2.17.0"
+    "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts-ts": "2.17.0",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6"
   },
   "scripts": {
     "start": "react-scripts-ts start",
+    "start:external": "cp ./.env.external ./.env && npm run start",
+    "start:internal": "cp ./.env.internal ./.env && npm run start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
@@ -18,6 +26,10 @@
     "@types/node": "^10.5.7",
     "@types/react": "^16.4.8",
     "@types/react-dom": "^16.0.7",
-    "typescript": "^3.0.1"
+    "@types/react-redux": "^6.0.6",
+    "@types/react-router": "^4.0.30",
+    "@types/react-router-dom": "^4.3.0",
+    "@types/redux-logger": "^3.0.6",
+    "typescript": "^2.9.2"
   }
 }
