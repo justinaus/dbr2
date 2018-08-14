@@ -62,7 +62,7 @@ class Entrance extends React.Component<Props, State> {
 
     this.setState( { isEnabled: false } );
     
-    fetch( process.env.REACT_APP_API_HEIMDALL_URL + "/token").then( ( response ) => {
+    fetch( process.env.REACT_APP_API_HEIMDALL_URL + strInput).then( ( response ) => {
       return response.json();
     }).then( ( data ) => {
       this.onCompleteLoadJson( data, strInput );
@@ -74,6 +74,8 @@ class Entrance extends React.Component<Props, State> {
   }
 
   private onCompleteLoadJson( data: any, strToken: string ):void {
+    console.log( data );
+
     if( data.status == "success" ) {
       this.props.onLoggedIn( data.ldap, strToken );
 
