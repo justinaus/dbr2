@@ -9,7 +9,6 @@
       "name": "typicode"
     },
     "token": {
-        "id": "abc",
         "status": "success",
         "ldap": "justin.koo"
     }
