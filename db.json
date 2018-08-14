@@ -8,8 +8,16 @@
     "profile": {
       "name": "typicode"
     },
-    "token": {
-        "status": "success",
-        "ldap": "justin.koo"
-    }
+    "users": [
+        {
+            "token": "abc",
+            "status": "success",
+            "ldap": "justin.koo"
+        },
+        {
+            "token": "def",
+            "status": "success",
+            "ldap": "foo.bar"
+        },
+    ]
   }
