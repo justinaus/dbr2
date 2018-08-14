@@ -18,6 +18,6 @@
             "token": "def",
             "status": "success",
             "ldap": "foo.bar"
-        },
+        }
     ]
   }
