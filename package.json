@@ -15,8 +15,8 @@
   },
   "scripts": {
     "start": "react-scripts-ts start",
-    "start:external": "cp ./.env.external ./.env && npm run start",
-    "start:internal": "cp ./.env.internal ./.env && npm run start",
+    "start:external": "REACT_APP_INTERNAL=false npm start",
+    "start:internal": "REACT_APP_INTERNAL=true npm start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
