@@ -15,6 +15,10 @@ class Entrance extends React.Component<Props, State> {
   constructor(props : Props){
     super(props);
 
+    this.onKeyUpHandler = this.onKeyUpHandler.bind( this );
+    this.tryToLogIn = this.tryToLogIn.bind( this );
+    this.onCompleteLoadJson = this.onCompleteLoadJson.bind( this );
+
     this.state = { isEnabled: true };
   }
 
@@ -41,14 +45,14 @@ class Entrance extends React.Component<Props, State> {
     );
   }
 
-  private onKeyUpHandler = ( e: React.KeyboardEvent ) => {
+  private onKeyUpHandler( e: React.KeyboardEvent ): void {
     if( e.keyCode != KeycodeEnum.ENTER )  return;
 
     const input: HTMLInputElement = e.target as HTMLInputElement;
     this.tryToLogIn( input.value );
   }
 
-  private tryToLogIn = ( strInput: string ) => {
+  private tryToLogIn( strInput: string ): void {
     if( !this.state.isEnabled )  return;
 
     if( !strInput ) {
@@ -57,22 +61,7 @@ class Entrance extends React.Component<Props, State> {
     }
 
     this.setState( { isEnabled: false } );
-
-    if( process.env.REACT_APP_INTERNAL === "true" ) {
-      this.getUserDataByToken( strInput );
-    } else {
-      const fakeDataForTest: any = {
-        status: "success",
-        ldap: "justin.koo"
-      }
-
-      this.onCompleteLoadJson( fakeDataForTest, strInput );
-    }
     
-    
-  }
-
-  private getUserDataByToken = ( strInput: string ) => {
     fetch( process.env.REACT_APP_API_HEIMDALL_URL + strInput).then( ( response ) => {
       return response.json();
     }).then( ( data ) => {
@@ -84,7 +73,7 @@ class Entrance extends React.Component<Props, State> {
     } );
   }
 
-  private onCompleteLoadJson = ( data: any, strToken: string ) => {
+  private onCompleteLoadJson( data: any, strToken: string ):void {
     console.log( data );
 
     if( data.status == "success" ) {
