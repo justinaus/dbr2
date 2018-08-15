@@ -5,12 +5,12 @@ import { RouterPathEnum } from './enums/RouterPathEnum';
 import BookListContainer from './containers/BookListContainer';
 import { RouteComponentProps } from 'react-router';
 
-interface Props {
+interface IProps {
   isLoggedIn: boolean
 }
 
-class App extends React.Component<Props, {}> {
-  constructor(props : Props){
+class App extends React.Component<IProps, {}> {
+  constructor(props : IProps){
     super(props);
   }
 

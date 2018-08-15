@@ -2,17 +2,18 @@ import * as React from 'react';
 import { KeycodeEnum } from '../enums/KeycodeEnum';
 import { RouteComponentProps } from 'react-router';
 import { RouterPathEnum } from '../enums/RouterPathEnum';
+import { API_HEIMDALL_URL } from '../config';
 
-interface Props extends RouteComponentProps<Entrance> {
+interface IProps extends RouteComponentProps<Entrance> {
   onLoggedIn: ( ldap: string, token: string ) => void;
 }
 
-interface State {
+interface IState {
   isEnabled: boolean
 }
 
-class Entrance extends React.Component<Props, State> {
-  constructor(props : Props){
+class Entrance extends React.Component<IProps, IState> {
+  constructor(props : IProps){
     super(props);
 
     this.state = { isEnabled: true };
@@ -71,7 +72,7 @@ class Entrance extends React.Component<Props, State> {
   }
 
   private getUserDataByToken = ( strInput: string ) => {
-    fetch( process.env.REACT_APP_API_HEIMDALL_URL + strInput).then( ( response ) => {
+    fetch( API_HEIMDALL_URL + strInput).then( ( response ) => {
       return response.json();
     }).then( ( data ) => {
       this.onCompleteLoadJson( data, strInput );

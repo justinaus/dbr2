@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
-interface Props extends RouteComponentProps<BookList>{
+interface IProps extends RouteComponentProps<BookList>{
   
 }
 
-class BookList extends React.Component<Props, {}> {
-  constructor(props : Props){
+class BookList extends React.Component<IProps, {}> {
+  constructor(props : IProps){
     super(props);
   }
 
