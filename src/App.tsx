@@ -3,9 +3,9 @@ import EntranceContainer from './containers/EntranceContainer';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { RouterPathEnum } from './enums/RouterPathEnum';
 import BookListContainer from './containers/BookListContainer';
-import { RouteComponentProps } from '../node_modules/@types/react-router';
+import { RouteComponentProps } from 'react-router';
 
-export interface Props {
+interface Props {
   isLoggedIn: boolean
 }
 
