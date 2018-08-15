@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
-export interface Props extends RouteComponentProps<BookList>{
+interface Props extends RouteComponentProps<BookList>{
   
 }
 
