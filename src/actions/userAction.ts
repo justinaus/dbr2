@@ -1,4 +1,3 @@
-
 export enum UserActionTypes {
     LOG_IN = 'userActionLogIn'
 }
