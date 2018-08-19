@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { KeycodeEnum } from '../enums/KeycodeEnum';
 import { RouteComponentProps } from 'react-router';
 import { RouterPathEnum } from '../enums/RouterPathEnum';
 import { API_HEIMDALL_URL } from '../config';
+import InputForm from './InputForm';
 
 interface IProps extends RouteComponentProps<Entrance> {
   onLoggedIn: ( ldap: string, token: string ) => void;
@@ -20,40 +20,21 @@ class Entrance extends React.Component<IProps, IState> {
   }
 
   render() {
-    let inputName: HTMLInputElement | null;
-
-    const onClickLogin = () => {
-      if( !inputName )  return;
-
-      this.tryToLogIn( inputName.value );
-    }
-
     return(
         <div>
             enter token:<br/>
-            <input 
-              type="text"
-              ref={ (t) => inputName = t } 
-              onKeyUp={ this.onKeyUpHandler }
-              disabled={ !this.state.isEnabled } />
-            <br/>
-            <button onClick={ onClickLogin } disabled={!this.state.isEnabled}>log in</button>
+            <InputForm 
+            buttonText="log in" 
+            onEnter={this.onEnterInputText}
+            isEnabled={this.state.isEnabled}
+            />
         </div> 
     );
   }
 
-  private onKeyUpHandler = ( e: React.KeyboardEvent ) => {
-    if( e.keyCode != KeycodeEnum.ENTER )  return;
-
-    const input: HTMLInputElement = e.target as HTMLInputElement;
-    this.tryToLogIn( input.value );
-  }
-
-  private tryToLogIn = ( strInput: string ) => {
-    if( !this.state.isEnabled )  return;
-
+  private onEnterInputText = ( strInput: string ) => {
     if( !strInput ) {
-      alert( "put your token." );  
+      alert( "enter your token" );  
       return;
     }
 
