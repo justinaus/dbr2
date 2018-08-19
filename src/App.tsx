@@ -4,9 +4,12 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { RouterPathEnum } from './enums/RouterPathEnum';
 import BookListContainer from './containers/BookListContainer';
 import { RouteComponentProps } from 'react-router';
+import BookDetail from './components/BookDetail';
+import { BookState } from './states/BookState';
 
 interface IProps {
-  isLoggedIn: boolean
+  isLoggedIn: boolean,
+  books: BookState[] | null
 }
 
 class App extends React.Component<IProps, {}> {
@@ -25,6 +28,23 @@ class App extends React.Component<IProps, {}> {
       return <EntranceContainer {...props} />;
     }
 
+    const renderBookDetail = ( props:RouteComponentProps<any> ) => {
+      if( !this.props.books ) {
+        return <Redirect to={RouterPathEnum.HOME} />
+      }
+      const nId: number = Number( props.match.params.id );
+      const books: BookState[] = this.props.books;
+      const found: BookState | undefined = books.find( ( element: BookState ) => {
+        return element.id === nId;
+      } );
+
+      if( !found ) {
+        return <Redirect to={RouterPathEnum.HOME} />
+      }
+
+      return <BookDetail {...props} bookState={ found } />;
+    }
+
     return (
       <BrowserRouter>
         <div>
@@ -33,6 +53,8 @@ class App extends React.Component<IProps, {}> {
               render={ (props) => renderHome( props ) } />
             { (!isLoggedIn) ? <Redirect to={RouterPathEnum.HOME} /> : '' }
             <Route path={RouterPathEnum.BOOK_LIST} component={BookListContainer}/>
+            <Route path={RouterPathEnum.BOOK_DETAIL + '/:id'} 
+              render={ (props) => renderBookDetail( props ) }/>
             <Redirect to={RouterPathEnum.HOME} />
           </Switch>
         </div>

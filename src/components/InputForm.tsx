@@ -4,7 +4,7 @@ import { KeycodeEnum } from '../enums/KeycodeEnum';
 interface IProps {
     buttonText: string;
     onEnter: ( strMess: string ) => void;
-    isEnabled: boolean
+    isEnabled: boolean;
 }
 
 interface IState {
