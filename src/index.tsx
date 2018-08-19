@@ -5,6 +5,7 @@ import { Store, createStore, applyMiddleware } from 'redux';
 import { logger } from 'redux-logger';
 import { Provider } from 'react-redux';
 import AppContainer from './containers/AppContainer';
+import './index.css';
 
 const store: Store<IStoreState> = createStore(
   rootReducer, 

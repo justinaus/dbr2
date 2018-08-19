@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { RouterPathEnum } from '../enums/RouterPathEnum';
 import { getAllBooks } from '../firebase/db';
 import InputForm from './InputForm';
+import './BookList.css';
+import BookItem from './BookItem';
 
 interface IProps extends RouteComponentProps<BookList>{
   booksAll: BookState[] | null,
@@ -24,8 +26,6 @@ class BookList extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-    // super.componentDidMount();
-
     if( !this.props.booksAll ) {
       this.getBookList();
     }
@@ -34,9 +34,7 @@ class BookList extends React.Component<IProps, IState> {
   private makeBookElements = () => (
     this.state.booksFiltered.map((bookModel, i) => {
         return (
-          <li key={i}>
-            <Link to={ RouterPathEnum.BOOK_DETAIL + '/' + bookModel.id }>{ bookModel.title }</Link>
-          </li>
+          <BookItem bookState={ bookModel } key={i} onClick={this.onClickItem} />
         );
     })
   );
@@ -57,6 +55,10 @@ class BookList extends React.Component<IProps, IState> {
           </ul>
         </div> 
     );
+  }
+
+  private onClickItem = ( bookState: BookState ) => {
+    this.props.history.push( RouterPathEnum.BOOK_DETAIL + "/" + bookState.id );
   }
 
   private getBookList = () => {
