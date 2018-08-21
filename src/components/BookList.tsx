@@ -11,6 +11,8 @@ import BookItem from './BookItem';
 interface IProps extends RouteComponentProps<BookList>{
   booksAll: BookState[] | null,
   onBookListChanged: ( books: BookState[] ) => void;
+  wordSearched: string | null;
+  onSaveWordSearched: ( wordSearched: string ) => void;
 }
 
 interface IState {
@@ -28,6 +30,8 @@ class BookList extends React.Component<IProps, IState> {
   componentDidMount() {
     if( !this.props.booksAll ) {
       this.getBookList();
+    } else if( this.props.wordSearched ) {
+      this.searchWord( this.props.wordSearched );
     }
   }
 
@@ -48,6 +52,7 @@ class BookList extends React.Component<IProps, IState> {
             buttonText="search" 
             onEnter={this.onEnterInputText}
             isEnabled={this.state.isEnabled}
+            startInputWord={this.props.wordSearched}
             />
           </div> 
           <ul>
@@ -90,10 +95,17 @@ class BookList extends React.Component<IProps, IState> {
 
   private onEnterInputText = ( strInput: string ) => {
     if( !this.props.booksAll )  return; 
+
+    this.props.onSaveWordSearched( strInput );
+
+    this.searchWord( strInput );
+  }
+
+  private searchWord = ( strWord: string ) => {
     const booksAll: BookState[] = this.props.booksAll as BookState[];
 
     const booksFiltered: BookState[] = booksAll.filter( ( item: BookState ) => {
-      return item.title.toUpperCase().includes( strInput.toUpperCase() );
+      return item.title.toUpperCase().includes( strWord.toUpperCase() );
     } );
 
     this.setState( { booksFiltered: booksFiltered } );

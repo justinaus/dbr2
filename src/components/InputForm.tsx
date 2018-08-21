@@ -5,6 +5,7 @@ interface IProps {
     buttonText: string;
     onEnter: ( strMess: string ) => void;
     isEnabled: boolean;
+    startInputWord?: string | null;
 }
 
 interface IState {
@@ -12,24 +13,31 @@ interface IState {
 }
 
 class InputForm extends React.Component<IProps, IState> {
+    // is this anti pattern? i don't know other way.
+    private inputName: HTMLInputElement | null;
+
     constructor(props : IProps){
         super(props);
     }
 
+    componentDidMount() {
+        if( this.inputName && this.props.startInputWord ) {
+            this.inputName.value = this.props.startInputWord;
+        }
+    } 
+
     render() {
-        let inputName: HTMLInputElement | null;
-
         const onClickButton = () => {
-            if( !inputName )  return;
+            if( !this.inputName )  return;
 
-            this.checkInputText( inputName.value );
+            this.checkInputText( this.inputName.value );
         }
 
         return(
             <div>
                 <input 
                 type="text"
-                ref={ (t) => inputName = t } 
+                ref={ (t) => this.inputName = t } 
                 onKeyUp={ this.onKeyUpHandler }
                 disabled={ !this.props.isEnabled } />
                 <br/>
