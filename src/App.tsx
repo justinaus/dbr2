@@ -6,9 +6,10 @@ import BookListContainer from './containers/BookListContainer';
 import { RouteComponentProps } from 'react-router';
 import BookDetail from './components/BookDetail';
 import { BookState } from './states/BookState';
+import { IUserState } from './states/IUserState';
 
 interface IProps {
-  isLoggedIn: boolean,
+  userState: IUserState,
   books: BookState[] | null
 }
 
@@ -18,7 +19,7 @@ class App extends React.Component<IProps, {}> {
   }
 
   public render() {
-    const isLoggedIn: boolean = this.props.isLoggedIn;
+    const isLoggedIn: boolean = this.props.userState.isLoggedIn;
 
     const renderHome = ( props:RouteComponentProps<any> ) => {
       if( isLoggedIn ) {
@@ -42,7 +43,7 @@ class App extends React.Component<IProps, {}> {
         return <Redirect to={RouterPathEnum.HOME} />
       }
 
-      return <BookDetail {...props} bookState={ found } />;
+      return <BookDetail {...props} bookState={ found } userState={ this.props.userState } />;
     }
 
     return (

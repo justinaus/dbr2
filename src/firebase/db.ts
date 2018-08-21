@@ -1,11 +1,12 @@
 import { db } from "./firebase";
 
-export async function saveRent( bookId: number, userLdap: string, rentalData: Date ): Promise<any> {
+export async function saveRent( isReturningBook: boolean, bookId: number, userLdap: string, date: Date ): Promise<any> {
     return new Promise<any>( resolve => {
         db.collection("rentals").add({
+            isReturningBook : isReturningBook,
             bookId: bookId,
             userLdap: userLdap,
-            rentalData: rentalData
+            date: date
         })
         .then(function(docRef) {
             resolve( docRef );
