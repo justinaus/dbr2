@@ -1,10 +1,14 @@
 import { UserAction, UserActionTypes } from "../actions/userAction";
 import { IUserState } from "../states/IUserState";
+import { loadUserState } from "../localStorage";
 
-const initialState: IUserState = {
-    isLoggedIn: false,
-    ldap: '',
-    token: ''
+const userStateFromLocalStorage: IUserState | null = loadUserState();
+
+const initialState: IUserState = userStateFromLocalStorage ? userStateFromLocalStorage : 
+{
+  isLoggedIn: false,
+  ldap: '',
+  token: ''
 }
 
 export function reduceUserState(state: IUserState = initialState, action: UserAction): IUserState {
