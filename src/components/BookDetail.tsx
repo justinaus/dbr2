@@ -3,6 +3,10 @@ import { BookState } from '../states/BookState';
 import { RouteComponentProps } from 'react-router';
 import { saveRent } from '../firebase/db';
 import { IUserState } from '../states/IUserState';
+import * as moment from 'moment';
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface IProps extends RouteComponentProps<BookDetail> {
     bookState: BookState;
@@ -10,15 +14,22 @@ interface IProps extends RouteComponentProps<BookDetail> {
 }
 
 interface IState {
-    isEnabled: boolean
+    selectedDateMoment: moment.Moment;
+    isEnabled: boolean;
 }
 
 class BookDetail extends React.Component<IProps, IState>{
     constructor( props: IProps ) {
         super( props );
 
-        this.state = { isEnabled: true };
+        this.state = { isEnabled: true, selectedDateMoment: moment() };
     }
+
+    handleChange = (dateMoment: moment.Moment) => {
+        this.setState({
+            selectedDateMoment: dateMoment
+        });
+      }
 
     render() {
         const bookState: BookState = this.props.bookState;
@@ -28,6 +39,10 @@ class BookDetail extends React.Component<IProps, IState>{
                 <img src={ bookState.cover_l_url }/>
                 <h1>{ bookState.title }</h1>
                 <h1>{ bookState.pub_nm }</h1>
+                <DatePicker
+                    selected={this.state.selectedDateMoment}
+                    onChange={this.handleChange}
+                />
                 <button onClick={this.onClickReturnBook} disabled={!this.state.isEnabled}>반납</button>
                 <button onClick={this.onClickRentBook} disabled={!this.state.isEnabled}>대여</button>
             </div>
@@ -35,11 +50,11 @@ class BookDetail extends React.Component<IProps, IState>{
     }
 
     private onClickReturnBook = ( e: React.MouseEvent<HTMLButtonElement> ) => {
-        this.saveData( true, new Date() );
+        this.saveData( true, this.state.selectedDateMoment.toDate() );
     }
 
     private onClickRentBook = ( e: React.MouseEvent<HTMLButtonElement> ) => {
-        this.saveData( false, new Date() );
+        this.saveData( false, this.state.selectedDateMoment.toDate() );
     }
 
     private saveData = ( isReturningBook: boolean, date: Date ) => {
