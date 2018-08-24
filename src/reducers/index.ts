@@ -7,7 +7,7 @@ import { reduceWordSearched } from "./searchReducer";
 
 export interface IStoreState {
   bookState: BookState[] | null,
-  userState: IUserState,
+  userState: IUserState | null,
   wordSearched: string | null
 }
 

@@ -4,7 +4,7 @@ import { RouterPathEnum } from '../enums/RouterPathEnum';
 import { API_HEIMDALL_URL } from '../config';
 import InputForm from './InputForm';
 
-interface IProps extends RouteComponentProps<Entrance> {
+interface IProps extends RouteComponentProps<Login> {
   onLoggedIn: ( ldap: string, token: string ) => void;
 }
 
@@ -12,7 +12,7 @@ interface IState {
   isEnabled: boolean
 }
 
-class Entrance extends React.Component<IProps, IState> {
+class Login extends React.Component<IProps, IState> {
   constructor(props : IProps){
     super(props);
 
@@ -70,7 +70,7 @@ class Entrance extends React.Component<IProps, IState> {
     if( data.status == "success" ) {
       this.props.onLoggedIn( data.ldap, strToken );
 
-      this.props.history.push( RouterPathEnum.BOOK_LIST );
+      this.props.history.push( RouterPathEnum.HOME );
     } else {
       alert( "wrong token" ); 
       this.setState( { isEnabled: true } );
@@ -78,4 +78,4 @@ class Entrance extends React.Component<IProps, IState> {
   }
 }
 
-export default Entrance;
+export default Login;

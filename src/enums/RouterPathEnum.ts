@@ -1,6 +1,5 @@
 export enum RouterPathEnum {
     HOME = '/',
-    ENTRANCE = '/entrance',
-    BOOK_LIST = '/books',
+    LOGIN = '/login',
     BOOK_DETAIL = '/book'
 }

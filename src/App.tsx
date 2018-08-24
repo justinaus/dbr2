@@ -1,5 +1,5 @@
 import * as React from 'react';
-import EntranceContainer from './containers/EntranceContainer';
+import LoginContainer from './containers/LoginContainer';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { RouterPathEnum } from './enums/RouterPathEnum';
 import BookListContainer from './containers/BookListContainer';
@@ -9,7 +9,7 @@ import { BookState } from './states/BookState';
 import { IUserState } from './states/IUserState';
 
 interface IProps {
-  userState: IUserState,
+  userState: IUserState | null,
   books: BookState[] | null
 }
 
@@ -19,17 +19,11 @@ class App extends React.Component<IProps, {}> {
   }
 
   public render() {
-    const isLoggedIn: boolean = this.props.userState.isLoggedIn;
-
-    const renderHome = ( props:RouteComponentProps<any> ) => {
-      if( isLoggedIn ) {
-        return <Redirect to={RouterPathEnum.BOOK_LIST} />;
-      }
-
-      return <EntranceContainer {...props} />;
-    }
-
+    const isLoggedIn: boolean = this.props.userState !== null;
+    
     const renderBookDetail = ( props:RouteComponentProps<any> ) => {
+      const userState: IUserState = this.props.userState as IUserState;
+
       if( !this.props.books ) {
         return <Redirect to={RouterPathEnum.HOME} />
       }
@@ -43,17 +37,16 @@ class App extends React.Component<IProps, {}> {
         return <Redirect to={RouterPathEnum.HOME} />
       }
 
-      return <BookDetail {...props} bookState={ found } userState={ this.props.userState } />;
+      return <BookDetail {...props} bookState={ found } userState={ userState } />;
     }
 
     return (
       <BrowserRouter>
         <div>
           <Switch>
-            <Route exact={true} path={RouterPathEnum.HOME}
-              render={ (props) => renderHome( props ) } />
-            { (!isLoggedIn) ? <Redirect to={RouterPathEnum.HOME} /> : '' }
-            <Route path={RouterPathEnum.BOOK_LIST} component={BookListContainer}/>
+            <Route path={RouterPathEnum.LOGIN} component={LoginContainer}/>
+            { (!isLoggedIn) ? <Redirect to={RouterPathEnum.LOGIN} /> : '' }
+            <Route exact={true} path={RouterPathEnum.HOME} component={BookListContainer}/>
             <Route path={RouterPathEnum.BOOK_DETAIL + '/:id'} 
               render={ (props) => renderBookDetail( props ) }/>
             <Redirect to={RouterPathEnum.HOME} />
