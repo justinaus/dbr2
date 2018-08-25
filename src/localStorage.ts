@@ -4,7 +4,7 @@ export enum LocalStorageKey {
     USER_STATE = "userState"
 }
 
-export const clearUserState = () => {
+export const clearLocalStorage = () => {
   try {
     localStorage.clear();
   } catch (err) {
@@ -12,7 +12,7 @@ export const clearUserState = () => {
   }
 }
 
-export const loadUserState = () :IUserState | null => {
+export const loadUserStateFromLocalStorage = () :IUserState | null => {
     try {
       const serializedState = localStorage.getItem( LocalStorageKey.USER_STATE )
       if (serializedState === null) {
@@ -25,7 +25,7 @@ export const loadUserState = () :IUserState | null => {
     }
   }
   
-  export const saveUserState = ( state: IUserState ) => {
+  export const saveUserStateToLocalStorage = ( state: IUserState ) => {
     try {
       const serializedState = JSON.stringify(state)
       localStorage.setItem( LocalStorageKey.USER_STATE, serializedState);
