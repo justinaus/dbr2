@@ -59,7 +59,7 @@ class Login extends React.Component<IProps, IState> {
       this.onCompleteLoadJson( data, strInput );
     }).catch( ( error ) => {
       console.log( error );
-      alert( "error" ); 
+      alert( "login error" ); 
       this.setState( { isEnabled: true } );
     } );
   }
