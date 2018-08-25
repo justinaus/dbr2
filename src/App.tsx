@@ -41,7 +41,7 @@ class App extends React.Component<IProps, {}> {
     }
 
     return (
-      <BrowserRouter>
+      <BrowserRouter basename={ process.env.PUBLIC_URL}>
         <div>
           <Switch>
             <Route path={RouterPathEnum.LOGIN} component={LoginContainer}/>
