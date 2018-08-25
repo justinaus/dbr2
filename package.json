@@ -5,6 +5,7 @@
   "dependencies": {
     "ajv": "^6.5.2",
     "firebase": "^5.4.0",
+    "gh-pages": "^1.2.0",
     "moment": "^2.22.2",
     "react": "^16.4.2",
     "react-datepicker": "^1.6.0",
@@ -22,7 +23,9 @@
     "start:internal": "REACT_APP_INTERNAL=true npm start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@types/jest": "^23.3.1",
@@ -37,5 +40,6 @@
     "@types/moment": "^2.13.0",
     "@types/react-datepicker": "^1.1.7",
     "typescript": "^2.9.2"
-  }
+  },
+  "homepage": "https://justinaus.github.io/dbr2"
 }
