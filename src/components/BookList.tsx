@@ -6,7 +6,6 @@ import { getAllBooks } from '../firebase/db';
 import InputForm from './InputForm';
 import './BookList.css';
 import BookItem from './BookItem';
-import LazyLoad from 'react-lazyload';
 
 interface IProps extends RouteComponentProps<BookList>{
   booksAll: BookState[] | null,
@@ -21,8 +20,6 @@ interface IState {
 }
 
 class BookList extends React.Component<IProps, IState> {
-  private itemHeight: number = 80;
-
   constructor(props : IProps){
     super(props);
 
@@ -40,39 +37,18 @@ class BookList extends React.Component<IProps, IState> {
   private makeBookElements = () => (
     this.state.booksFiltered.map((bookModel, i) => {
         return (
-          <LazyLoad height={ this.itemHeight } key={i} >
-            <BookItem 
-            bookState={ bookModel } 
-            onClick={this.onClickItem}
-            />
-          </LazyLoad>
+          <BookItem 
+          key={i}
+          bookState={ bookModel } 
+          onClick={this.onClickItem}
+          />
         );
     })
   );
 
-  private loadSampleForItemHeight = () => {
-    if( !this.props.booksAll ||  this.props.booksAll.length < 1 ) {
-      return '';
-    }
-
-    const onCompleteRender = ( item: BookItem, nHeight:number ) => {
-      this.itemHeight = nHeight;
-      item.hide();
-    } 
-
-    return (
-      <BookItem
-      bookState={ this.props.booksAll[ 0 ] }
-      onClick={this.onClickItem}
-      onCompleteRender={ onCompleteRender }
-      />
-    );
-  }
-
   render() {
     return(
         <div>
-          { this.loadSampleForItemHeight() } 
           <div>
             search book title:<br/>
             <InputForm 
