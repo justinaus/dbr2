@@ -40,7 +40,7 @@ class Input extends React.Component<IProps, {}> {
             width: 100,
             height: 40,
             color: '#777777',
-            fontSize: 13,
+            fontSize: 16,
             fontFamily: 'AppleSDGothicNeo-Regular',
             padding: '0px 10px 0px 10px',
             border: 0,
