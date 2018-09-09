@@ -20,6 +20,7 @@ class App extends React.Component<IProps, {}> {
 
   public render() {
     const isLoggedIn: boolean = this.props.userState !== null;
+    const hasData: boolean = this.props.books !== null;
     
     const renderBookDetail = ( props:RouteComponentProps<any> ) => {
       const userState: IUserState = this.props.userState as IUserState;
@@ -46,6 +47,7 @@ class App extends React.Component<IProps, {}> {
             <Route path={RouterPathEnum.LOGIN} component={LoginContainer}/>
             { (!isLoggedIn) ? <Redirect to={RouterPathEnum.LOGIN} /> : '' }
             <Route exact={true} path={RouterPathEnum.HOME} component={BookListContainer}/>
+            { (!hasData) ? <Redirect to={RouterPathEnum.HOME} /> : '' }
             <Route path={RouterPathEnum.BOOK_DETAIL + '/:id'} 
               render={ (props) => renderBookDetail( props ) }/>
             <Redirect to={RouterPathEnum.HOME} />
