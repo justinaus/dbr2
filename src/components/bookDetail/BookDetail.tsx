@@ -4,11 +4,12 @@ import { RouteComponentProps } from 'react-router';
 import { saveRent } from '../../firebase/db';
 import { IUserState } from '../../states/IUserState';
 import * as moment from 'moment';
-import DatePicker from 'react-datepicker';
-
-import 'react-datepicker/dist/react-datepicker.css';
 import Button, { ButtonTypeEnum } from '../../ui-components/button/Button';
 import { SizeEnum } from '../../ui-components/size';
+
+import 'react-dates/lib/css/_datepicker.css';
+import { SingleDatePicker } from 'react-dates';
+import 'react-dates/initialize';
 
 interface IProps extends RouteComponentProps<BookDetail> {
     bookState: BookState;
@@ -18,20 +19,27 @@ interface IProps extends RouteComponentProps<BookDetail> {
 interface IState {
     selectedDateMoment: moment.Moment;
     isEnabled: boolean;
+    focused:boolean
 }
 
 class BookDetail extends React.Component<IProps, IState>{
     constructor( props: IProps ) {
         super( props );
 
-        this.state = { isEnabled: true, selectedDateMoment: moment() };
+        this.state = { isEnabled: true, selectedDateMoment: moment(), focused: false };
     }
 
     handleChange = (dateMoment: moment.Moment) => {
         this.setState({
             selectedDateMoment: dateMoment
         });
-      }
+    }
+
+    onFocusChanged = ( obj: { focused: boolean | null } ) => {
+        this.setState({
+            focused: obj.focused ? obj.focused : false
+        });
+    }
 
     render() {
         const bookState: BookState = this.props.bookState;
@@ -41,9 +49,15 @@ class BookDetail extends React.Component<IProps, IState>{
                 <img src={ bookState.cover_l_url }/>
                 <h1>{ bookState.title }</h1>
                 <h1>{ bookState.pub_nm }</h1>
-                <DatePicker
-                    selected={this.state.selectedDateMoment}
-                    onChange={this.handleChange}
+                <SingleDatePicker
+                    date={this.state.selectedDateMoment} // momentPropTypes.momentObj or null
+                    onDateChange={ this.handleChange } // PropTypes.func.isRequired
+                    focused={this.state.focused} // PropTypes.bool
+                    onFocusChange={ this.onFocusChanged } // PropTypes.func.isRequired
+                    id="justinkoo" // PropTypes.string.isRequired,
+                    numberOfMonths={ 1 }
+                    isOutsideRange={() => false}
+                    noBorder={ true }
                 />
                 <Button
                 buttonType={ ButtonTypeEnum.SUBMIT }
@@ -51,6 +65,7 @@ class BookDetail extends React.Component<IProps, IState>{
                 size={ SizeEnum.MIDDLE } 
                 onClick={this.onClickReturnBook}
                 isEnabled={this.state.isEnabled}
+                cssProperty={ { display: 'block' } }
                 />
                 <Button 
                 buttonType={ ButtonTypeEnum.SUBMIT }
