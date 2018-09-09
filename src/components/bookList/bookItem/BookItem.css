@@ -1,0 +1,7 @@
+.bookItemContainer {
+    /* width: 100%; */
+    background-color: white;
+    border: 1px solid #ccccccaa;
+    padding: 20px;
+    margin-bottom: 10px;
+}

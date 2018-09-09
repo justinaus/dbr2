@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { BookState } from '../states/BookState';
-import { RouterPathEnum } from '../enums/RouterPathEnum';
-import { getAllBooks } from '../firebase/db';
-import InputForm from './InputForm';
+import { BookState } from '../../states/BookState';
+import { RouterPathEnum } from '../../enums/RouterPathEnum';
+import { getAllBooks } from '../../firebase/db';
 import './BookList.css';
-import BookItem from './BookItem';
+import BookItem from './bookItem/BookItem';
+import Input from '../../ui-components/Input';
+import Button, { ButtonTypeEnum } from '../../ui-components/button/Button';
 
 interface IProps extends RouteComponentProps<BookList>{
   booksAll: BookState[] | null,
@@ -20,6 +21,8 @@ interface IState {
 }
 
 class BookList extends React.Component<IProps, IState> {
+  private currentText: string = "";
+
   constructor(props : IProps){
     super(props);
 
@@ -29,8 +32,10 @@ class BookList extends React.Component<IProps, IState> {
   componentDidMount() {
     if( !this.props.booksAll ) {
       this.getBookList();
-    } else if( this.props.wordSearched ) {
+    } else if( this.props.wordSearched !== null ) {
       this.searchWord( this.props.wordSearched );
+    } else {
+      this.onChangeInputHandler( "" );
     }
   }
 
@@ -48,15 +53,24 @@ class BookList extends React.Component<IProps, IState> {
 
   render() {
     return(
-        <div>
-          <div>
-            search book title:<br/>
-            <InputForm 
-            buttonText="search" 
-            onEnter={this.onEnterInputText}
-            isEnabled={this.state.isEnabled}
-            startInputWord={this.props.wordSearched}
-            />
+        <div className="container">
+          <div className="topSearch">
+            <h3>도서 목록</h3>
+            <div>
+                <Input
+                    isEnabled={ this.state.isEnabled }
+                    onEnterKey={ () => this.searchWord( this.currentText ) }
+                    cssProperty={ { marginRight: 10, marginTop: '10px' } }
+                    defaultValue={this.props.wordSearched !== null ? this.props.wordSearched : undefined}
+                    onChange={ ( e ) => this.onChangeInputHandler( e.currentTarget.value ) }
+                />
+                <Button
+                    buttonType={ ButtonTypeEnum.OUTLINE }
+                    text="조회"
+                    onClick={ () => this.searchWord( this.currentText ) }
+                    isEnabled={this.state.isEnabled}
+                />
+            </div> 
           </div>
           <ul>
             { this.makeBookElements() }
@@ -89,6 +103,9 @@ class BookList extends React.Component<IProps, IState> {
 
       this.props.onBookListChanged( books );
 
+      // 그냥 전체 리스트 보여주는 걸로 시작.
+      this.onChangeInputHandler( "" );
+
       this.setState( { isEnabled: true } );
     } )
     .catch( ( error ) => {
@@ -96,15 +113,18 @@ class BookList extends React.Component<IProps, IState> {
     } );
   }
 
-  private onEnterInputText = ( strInput: string ) => {
-    if( !this.props.booksAll )  return; 
-
-    this.props.onSaveWordSearched( strInput );
+  private onChangeInputHandler = ( strInput: string ) => {
+    this.currentText = strInput;
 
     this.searchWord( strInput );
   }
-
+  
   private searchWord = ( strWord: string ) => {
+    // if( !this.state.isEnabled )  return;
+    if( !this.props.booksAll )  return; 
+
+    this.props.onSaveWordSearched( strWord );
+
     const booksAll: BookState[] = this.props.booksAll as BookState[];
 
     const booksFiltered: BookState[] = booksAll.filter( ( item: BookState ) => {

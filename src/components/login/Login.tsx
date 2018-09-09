@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { RouterPathEnum } from '../enums/RouterPathEnum';
-import { API_HEIMDALL_URL } from '../config';
-import InputForm from './InputForm';
+import { RouterPathEnum } from '../../enums/RouterPathEnum';
+import { API_HEIMDALL_URL } from '../../config';
+import './Login.css';
+import Input from '../../ui-components/Input';
+import Button, { ButtonTypeEnum } from '../../ui-components/button/Button';
 
 interface IProps extends RouteComponentProps<Login> {
   onLoggedIn: ( ldap: string, token: string ) => void;
@@ -13,6 +15,8 @@ interface IState {
 }
 
 class Login extends React.Component<IProps, IState> {
+  private currentText: string = "";
+
   constructor(props : IProps){
     super(props);
 
@@ -21,20 +25,36 @@ class Login extends React.Component<IProps, IState> {
 
   render() {
     return(
-        <div>
-            enter token:<br/>
-            <InputForm 
-            buttonText="log in" 
-            onEnter={this.onEnterInputText}
-            isEnabled={this.state.isEnabled}
-            />
+        <div className="loginContainer">
+          <div className="box">
+            <h3>토큰</h3>
+            <div>
+                <Input
+                    isEnabled={ this.state.isEnabled }
+                    onEnterKey={ () => this.onSubmitInputText( this.currentText ) }
+                    cssProperty={ { display: 'block', width: '180px', marginTop: '10px' } }
+                    onChange={ this.onChangeInputHandler }
+                />
+                <Button
+                    buttonType={ ButtonTypeEnum.SUBMIT }
+                    text="로그인"
+                    onClick={ () => this.onSubmitInputText( this.currentText ) }
+                    cssProperty={ { width: '100%', marginTop: '20px' } }
+                    isEnabled={this.state.isEnabled}
+                />
+            </div> 
+          </div>
         </div> 
     );
   }
 
-  private onEnterInputText = ( strInput: string ) => {
-    if( !strInput ) {
-      alert( "enter your token" );  
+  private onChangeInputHandler = ( e: React.ChangeEvent<HTMLInputElement> ) => {
+    this.currentText = e.currentTarget.value;
+  }
+
+  private onSubmitInputText = ( strInput: string ) => {
+    if( !strInput.trim() ) {
+      alert( "올바른 토큰을 입력해주세요." );  
       return;
     }
 

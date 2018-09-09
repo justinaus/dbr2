@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { BookState } from '../states/BookState';
+import { BookState } from '../../states/BookState';
 import { RouteComponentProps } from 'react-router';
-import { saveRent } from '../firebase/db';
-import { IUserState } from '../states/IUserState';
+import { saveRent } from '../../firebase/db';
+import { IUserState } from '../../states/IUserState';
 import * as moment from 'moment';
 import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import Button, { ButtonTypeEnum } from '../../ui-components/button/Button';
+import { SizeEnum } from '../../ui-components/size';
 
 interface IProps extends RouteComponentProps<BookDetail> {
     bookState: BookState;
@@ -43,8 +45,20 @@ class BookDetail extends React.Component<IProps, IState>{
                     selected={this.state.selectedDateMoment}
                     onChange={this.handleChange}
                 />
-                <button onClick={this.onClickReturnBook} disabled={!this.state.isEnabled}>반납</button>
-                <button onClick={this.onClickRentBook} disabled={!this.state.isEnabled}>대여</button>
+                <Button
+                buttonType={ ButtonTypeEnum.SUBMIT }
+                text="반납" 
+                size={ SizeEnum.MIDDLE } 
+                onClick={this.onClickReturnBook}
+                isEnabled={this.state.isEnabled}
+                />
+                <Button 
+                buttonType={ ButtonTypeEnum.SUBMIT }
+                text="대여" 
+                size={ SizeEnum.MIDDLE } 
+                onClick={this.onClickRentBook}
+                isEnabled={this.state.isEnabled}
+                />
             </div>
         );
     }

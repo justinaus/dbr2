@@ -1,4 +1,27 @@
-body {
+html {
+    background: #eeeeee;
+    height: 100%
+}
+
+#root {
+    min-width: 320px;
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+}
+
+body, button, input, h1, h2, h3, h4, h5, h6 {
+    font-family: Apple SD Gothic Neo, Malgun Gothic;
+    color: #383838;
+}
+
+body, button, h1, h2, h3, h4, h5, h6, li, ul {
     margin: 0;
     padding: 0;
 }
+
+ul {
+    list-style-type: none;
+}
+
+

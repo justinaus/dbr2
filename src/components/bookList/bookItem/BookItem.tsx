@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { BookState } from '../states/BookState';
+import './BookItem.css'
+import { BookState } from '../../../states/BookState';
 import LazyLoad from 'react-lazyload';
 
 interface IProps {
@@ -18,7 +19,8 @@ class BookItem extends React.Component<IProps>{
 
         return(
             <div 
-            onClick={ this.onClick } 
+                className='bookItemContainer'
+                onClick={ this.onClick } 
             >
                 <LazyLoad height={ IMAGE_HEIGHT }>
                     <img src={ bookState.cover_s_url } height={ IMAGE_HEIGHT }/>

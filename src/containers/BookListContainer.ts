@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { IStoreState } from '../reducers';
 import { Dispatch } from 'redux';
-import BookList from '../components/BookList';
+import BookList from '../components/bookList/BookList';
 import { BookState } from '../states/BookState';
 import { createChangeBookListAction } from '../actions/bookAction';
 import { createSaveWordSearchedAction } from '../actions/searchAction';

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { IStoreState } from '../reducers';
 import { Dispatch } from 'redux';
 import { createLogInAction } from '../actions/userAction';
-import Login from '../components/Login';
+import Login from '../components/login/Login';
 import { saveUserStateToLocalStorage } from '../localStorage';
 
 export function mapStateToProps( state: IStoreState) {

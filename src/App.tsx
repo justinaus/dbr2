@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { RouterPathEnum } from './enums/RouterPathEnum';
 import BookListContainer from './containers/BookListContainer';
 import { RouteComponentProps } from 'react-router';
-import BookDetail from './components/BookDetail';
+import BookDetail from './components/bookDetail/BookDetail';
 import { BookState } from './states/BookState';
 import { IUserState } from './states/IUserState';
 
@@ -42,7 +42,6 @@ class App extends React.Component<IProps, {}> {
 
     return (
       <BrowserRouter basename={ process.env.PUBLIC_URL}>
-        <div>
           <Switch>
             <Route path={RouterPathEnum.LOGIN} component={LoginContainer}/>
             { (!isLoggedIn) ? <Redirect to={RouterPathEnum.LOGIN} /> : '' }
@@ -51,7 +50,6 @@ class App extends React.Component<IProps, {}> {
               render={ (props) => renderBookDetail( props ) }/>
             <Redirect to={RouterPathEnum.HOME} />
           </Switch>
-        </div>
       </BrowserRouter>
     );
   }

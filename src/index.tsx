@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import './index.css';
 import { IStoreState, rootReducer } from './reducers';
 import { Store, createStore, applyMiddleware } from 'redux';
 import { logger } from 'redux-logger';
 import { Provider } from 'react-redux';
 import AppContainer from './containers/AppContainer';
-import './index.css';
+
 
 const store: Store<IStoreState> = createStore(
   rootReducer, 
